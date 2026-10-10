@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyFOI – Make Freedom of Information requests simple</title>
+  <meta name="description" content="Generate clear, effective Freedom of Information (FOI) requests to UK public authorities in minutes. Hold the public sector to account.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">EasyFOI</div>
+      <nav>
+        <a href="#search">Search existing</a>
+        <a href="#wizard">Make a request</a>
+        <a href="#tracker">My requests</a>
+        <a href="#guide">Guide</a>
+        <a href="https://www.whatdotheyknow.com/" target="_blank" rel="noopener">WhatDoTheyKnow</a>
+      </nav>
+      <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Hold the public sector to account.</h1>
+        <p class="lead">The Freedom of Information Act gives you the right to request recorded information from almost any public body. EasyFOI helps you write a clear, effective request in minutes — and check whether the information is already public.</p>
+        <a href="#search" class="btn secondary" style="margin-right: 0.75rem;">Search existing requests</a>
+        <a href="#wizard" class="btn primary">Start your request</a>
+        <p class="note">Requests are free. Responses are due within 20 working days. Always search first.</p>
+      </div>
+    </section>
+
+    <section id="search" class="section alt">
+      <div class="container">
+        <h2>Search existing FOI requests</h2>
+        <p>Before making a new request, check whether the information has already been released. WhatDoTheyKnow holds over a million requests and responses from public authorities.</p>
+        <div class="search-box">
+          <input type="text" id="wdtk-search" placeholder="e.g. consultant spending Home Office, school exclusions, NHS waiting times..." autocomplete="off">
+          <button id="search-wdtk" class="btn primary">Search WhatDoTheyKnow</button>
+        </div>
+        <p class="note">This opens WhatDoTheyKnow’s public archive. Use quotes for exact phrases, or add the authority name for better results.</p>
+        <div class="quick-searches">
+          <p>Popular starting points:</p>
+          <a class="chip" href="https://www.whatdotheyknow.com/search?query=consultants%20OR%20consultancy" target="_blank" rel="noopener">Consultant spending</a>
+          <a class="chip" href="https://www.whatdotheyknow.com/search?query=FOI%20policy%20OR%20response%20times" target="_blank" rel="noopener">FOI handling</a>
+          <a class="chip" href="https://www.whatdotheyknow.com/search?query=waiting%20times%20NHS" target="_blank" rel="noopener">NHS waiting times</a>
+          <a class="chip" href="https://www.whatdotheyknow.com/search?query=school%20exclusions" target="_blank" rel="noopener">School exclusions</a>
+          <a class="chip" href="https://www.whatdotheyknow.com/advancedsearch" target="_blank" rel="noopener">Advanced search</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="wizard" class="section">
+      <div class="container">
+        <h2>Generate your FOI request</h2>
+        <div class="wizard">
+          <div class="steps">
+            <div class="step active" data-step="1">1. What</div>
+            <div class="step" data-step="2">2. Who</div>
+            <div class="step" data-step="3">3. You</div>
+            <div class="step" data-step="4">4. Review</div>
+          </div>
+
+          <!-- Step 1 -->
+          <div class="step-content active" data-step="1">
+            <h3>What information do you want?</h3>
+            <p>Be specific. Include dates, places, departments, or document types if you know them. You are asking for <em>recorded information</em> the authority holds, not opinions or new analysis.</p>
+            <textarea id="info-request" placeholder="Example: Please provide all contracts and invoices related to external consultants hired for digital transformation projects between 1 January 2024 and 31 December 2025, including the value of each contract and the name of the supplier." rows="6"></textarea>
+            <div class="tips">
+              <strong>Tips for better requests:</strong>
+              <ul>
+                <li>Narrow the date range where possible</li>
+                <li>Name a department or team if you know it</li>
+                <li>Ask for data in a reusable format (CSV, spreadsheet) if relevant</li>
+                <li>Avoid fishing expeditions — focus on what you actually need</li>
+              </ul>
+            </div>
+            <div class="quick-examples">
+              <p>Or start from an example:</p>
+              <button class="chip" data-example="Please provide the total amount spent on external consultants in the last two financial years, broken down by department and the name of the consultancy firm.">Spending on consultants</button>
+              <button class="chip" data-example="Please provide copies of all policies and guidance relating to the handling of Freedom of Information requests, including any internal targets for response times.">FOI policies</button>
+              <button class="chip" data-example="Please provide the number of complaints received about [service] in the last 12 months, and a summary of the outcomes.">Complaints data</button>
+              <button class="chip" data-example="Please provide all correspondence (emails, letters, meeting notes) between [senior official] and [external organisation] relating to [topic] between [date] and [date].">Correspondence</button>
+            </div>
+            <button id="search-from-request" class="btn secondary" style="margin-bottom: 1rem;">Search WhatDoTheyKnow for this topic</button>
+            <button class="btn primary next">Next: Choose authority</button>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-content" data-step="2">
+            <h3>Which public authority?</h3>
+            <p>Search for the body most likely to hold the information. For the full list of 45,000+ authorities and to check existing requests, use <a href="https://www.whatdotheyknow.com/select_authority" target="_blank" rel="noopener">WhatDoTheyKnow</a>.</p>
+            <input type="text" id="authority-search" placeholder="Search authorities (e.g. Home Office, Birmingham Council, NHS)..." autocomplete="off">
+            <div id="authority-results" class="results"></div>
+            <div class="selected-authority" id="selected-authority" hidden>
+              <strong>Selected:</strong> <span id="selected-name"></span>
+              <button id="clear-authority" class="btn small">Change</button>
+            </div>
+            <div class="other-authority">
+              <label><input type="checkbox" id="other-auth"> The authority isn't listed / I know the contact</label>
+              <input type="text" id="custom-authority" placeholder="Authority name" hidden>
+              <input type="email" id="custom-email" placeholder="FOI email address (optional)" hidden>
+            </div>
+            <div class="nav-buttons">
+              <button class="btn secondary prev">Back</button>
+              <button class="btn primary next">Next: Your details</button>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-content" data-step="3">
+            <h3>Your details</h3>
+            <p>A valid FOI request needs your real name and a contact address (email is fine). You do not have to explain why you want the information.</p>
+            <label>Your full name<br><input type="text" id="user-name" placeholder="Jane Smith" required></label>
+            <label>Email address<br><input type="email" id="user-email" placeholder="jane@example.com" required></label>
+            <label>Phone (optional, helps if they need to clarify)<br><input type="tel" id="user-phone" placeholder="07..."></label>
+            <label>Preferred format<br>
+              <select id="preferred-format">
+                <option value="electronically by email">Electronically by email</option>
+                <option value="as a spreadsheet or CSV where possible">Spreadsheet / CSV</option>
+                <option value="PDF">PDF</option>
+                <option value="hard copy by post">Hard copy by post</option>
+              </select>
+            </label>
+            <div class="nav-buttons">
+              <button class="btn secondary prev">Back</button>
+              <button class="btn primary next">Review request</button>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step-content" data-step="4">
+            <h3>Your request</h3>
+            <div class="preview-box">
+              <div class="preview-header">
+                <strong>Subject:</strong> <span id="preview-subject"></span>
+              </div>
+              <pre id="preview-body"></pre>
+            </div>
+            <div class="actions">
+              <button id="copy-request" class="btn primary">Copy request</button>
+              <button id="download-request" class="btn secondary">Download .txt</button>
+              <a id="mailto-link" class="btn secondary" href="#">Open in email</a>
+              <button id="save-request" class="btn secondary">Save to tracker</button>
+            </div>
+            <p class="note">Check existing requests on <a href="https://www.whatdotheyknow.com/" target="_blank" rel="noopener">WhatDoTheyKnow</a> before sending. If you use their site, the response will be published for everyone.</p>
+            <div class="nav-buttons">
+              <button class="btn secondary prev">Back</button>
+              <button class="btn primary" id="restart">Start over</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tracker" class="section alt">
+      <div class="container">
+        <h2>My requests</h2>
+        <p>Requests you save are stored only in your browser. We calculate an approximate 20 working-day deadline (excluding weekends; bank holidays not fully accounted for).</p>
+        <div id="requests-list"></div>
+        <p id="no-requests" class="note">No saved requests yet. Generate one above and click “Save to tracker”.</p>
+      </div>
+    </section>
+
+    <section id="guide" class="section">
+      <div class="container">
+        <h2>How FOI works</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Search first</h3>
+            <p>WhatDoTheyKnow publishes over a million FOI requests and responses. Searching there (and the authority’s own website or disclosure log) can save you time and avoid unnecessary requests. Use the search tools above or the button in the request wizard.</p>
+          </div>
+          <div class="card">
+            <h3>Your rights</h3>
+            <p>Under the Freedom of Information Act 2000, anyone can request recorded information held by public authorities in England, Wales, Northern Ireland, and UK-wide bodies. Scottish bodies are covered by the separate Freedom of Information (Scotland) Act.</p>
+            <p>You do not need to say why you want it. The authority must confirm whether it holds the information and provide it (or a valid reason for withholding) within 20 working days.</p>
+          </div>
+          <div class="card">
+            <h3>What you can ask for</h3>
+            <p>Emails, letters, reports, contracts, spreadsheets, meeting minutes, CCTV, voice recordings, policies, statistics — anything recorded. You cannot force them to create new information or answer questions that require analysis they don’t already hold.</p>
+          </div>
+          <div class="card">
+            <h3>Common reasons for refusal</h3>
+            <ul>
+              <li>Information not held</li>
+              <li>Cost exceeds the appropriate limit (usually £450 / 18 hours for local authorities)</li>
+              <li>Vexatious or repeated</li>
+              <li>Exemptions (personal data, commercial interests, law enforcement, etc.) — many are subject to a public interest test</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>If they refuse or delay</h3>
+            <ol>
+              <li>Ask for an <strong>internal review</strong> within 40 working days of the response (or when it was due).</li>
+              <li>If still unhappy, complain to the <a href="https://ico.org.uk/make-a-complaint/foi-and-eir-complaints/" target="_blank" rel="noopener">Information Commissioner’s Office (ICO)</a>.</li>
+              <li>WhatDoTheyKnow provides guidance and templates for reviews and appeals.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="resources">
+          <h3>Useful links</h3>
+          <ul>
+            <li><a href="https://ico.org.uk/for-the-public/official-information/" target="_blank" rel="noopener">ICO: Official information guidance</a></li>
+            <li><a href="https://www.gov.uk/make-a-freedom-of-information-request" target="_blank" rel="noopener">GOV.UK: How to make an FOI request</a></li>
+            <li><a href="https://www.whatdotheyknow.com/" target="_blank" rel="noopener">WhatDoTheyKnow – make requests and browse the archive</a></li>
+            <li><a href="https://www.whatdotheyknow.com/help/about" target="_blank" rel="noopener">About WhatDoTheyKnow</a></li>
+          </ul>
+        </div>
+        <p class="disclaimer">This site provides general guidance only and is not legal advice. Always check the latest information from the ICO or a qualified adviser for complex cases.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>EasyFOI is an independent tool to help people exercise their right to information. Built to make scrutiny easier.</p>
+      <p>Not affiliated with the Information Commissioner’s Office, WhatDoTheyKnow, or any public authority.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
